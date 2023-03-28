@@ -13,7 +13,7 @@ import { themes } from './data/themes'
 
 export default function App() {
 	const [firstValue, setFirstValue] = useState<string>('')
-	const [secondValue, setSecondValue] = useState<string>('')
+	const [secondValue, setSecondValue] = useState<string>('0')
 	const [operator, setOperator] = useState<string>('')
 	const [theme, setTheme] = useState<number>(0)
 
@@ -21,7 +21,7 @@ export default function App() {
 		if (key === controls.RESET) {
 			setFirstValue('')
 			setOperator('')
-			setSecondValue('')
+			setSecondValue('0')
 		} else if (key === controls.DEL) {
 			if (!operator) {
 				setFirstValue(prev => removeLastDigit(prev))
@@ -40,7 +40,7 @@ export default function App() {
 				getResult(firstValue, secondValue, operations[operator]).toString()
 			)
 			setOperator('')
-			setSecondValue('')
+			setSecondValue('0')
 		} else if (!operator && !isKeyOperator(key)) {
 			setFirstValue(prev => addKey(prev, key))
 		} else if (firstValue && isKeyOperator(key)) {

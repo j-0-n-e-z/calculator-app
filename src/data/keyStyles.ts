@@ -16,8 +16,4 @@ export const getKeyStyle = (key: string) => {
 	}
 }
 
-export const themeSwitcherStyles: Record<number, string> = {
-	0: 'translate-x-[0px] transition duration-300',
-	1: 'translate-x-[26px] transition duration-300',
-	2: 'translate-x-[52px] transition duration-300'
-}
+

@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { controls, keypad, keys } from './data/keys'
 import { operations } from './data/operations'
-import { getKeyStyle, themeSwitcherStyles } from './data/keyStyles'
+import { getKeyStyle } from './data/keyStyles'
 import { addKey, isKeyOperator, removeLastDigit } from './utils/helpers'
 import { themes } from './data/themes'
+import { switcherStyles } from './data/switcherStyles'
 
 export default function App() {
 	const [firstValue, setFirstValue] = useState<string>('0')
 	const [secondValue, setSecondValue] = useState<string>('0')
 	const [operator, setOperator] = useState<string>('')
-	const [theme, setTheme] = useState<number>(0)
+	const [theme, setTheme] = useState('dark')
 
 	function handleKeyClick(key: string) {
 		if (key === controls.RESET) {
@@ -50,7 +51,7 @@ export default function App() {
 	}
 
 	useEffect(() => {
-		document.querySelector('html')!.setAttribute('data-theme', themes[theme])
+		document.querySelector('html')!.setAttribute('data-theme', theme)
 	}, [theme])
 
 	return (
@@ -68,10 +69,10 @@ export default function App() {
 					</div>
 					<div
 						className='w-20 h-7 bg-keypad rounded-full flex items-center p-[5px] cursor-pointer'
-						onClick={() => setTheme(prev => (prev + 1) % 3)}
+						onClick={() => setTheme(prev => prev === 'dark' ? 'light' : prev === 'light' ? 'neon' : 'dark')}
 					>
 						<div
-							className={`rounded-full w-[18px] h-[18px] bg-equal ${themeSwitcherStyles[theme]}`}
+							className={`rounded-full w-[18px] h-[18px] bg-equal ${switcherStyles[theme]}`}
 						></div>
 					</div>
 				</div>

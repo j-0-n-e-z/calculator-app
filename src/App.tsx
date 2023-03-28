@@ -5,7 +5,6 @@ import { operations } from './data/operations'
 import { getKeyStyle } from './data/styles'
 import { themeSwitcherStyles } from './data/themeSwitcherStyles'
 
-
 function App() {
 	const [firstValue, setFirstValue] = useState<string>('')
 	const [secondValue, setSecondValue] = useState<string>('')
@@ -20,11 +19,10 @@ function App() {
 		return num
 	}
 	const getFloatDigitsCount = (...values: string[]) => {
-		let count = 0
-		values.forEach(
-			value => value.indexOf('.') !== -1 && (count += value.length - 2)
-		)
-		return count
+		return values.reduce((count, value) => {
+			if (value.indexOf('.') !== -1) count += value.length - 2
+			return count
+		}, 0)
 	}
 	const getResult = (
 		first: number,

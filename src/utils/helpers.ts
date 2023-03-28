@@ -1,6 +1,4 @@
 import { keys, operators } from '../data/keys'
-import { operations } from '../data/operations'
-import { ValueOf } from '../types'
 
 export const isKeyOperator = (key: string) =>
 	Object.values(operators).includes(key)
@@ -11,14 +9,6 @@ export const removeLastDigit = (num: string) => {
 		: num.length > 1
 		? num.slice(0, -1)
 		: num
-}
-
-export const getResult = (
-	first: string,
-	second: string,
-	operation: ValueOf<typeof operations>
-) => {
-	return Math.round(operation(+first, +second) * 1e10) / 1e10
 }
 
 export const addKey = (current: string, key: string) => {

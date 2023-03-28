@@ -3,23 +3,18 @@ import './App.css'
 import { controls, keypad, keys } from './data/keys'
 import { operations } from './data/operations'
 import { getKeyStyle, themeSwitcherStyles } from './data/keyStyles'
-import {
-	addKey,
-	getResult,
-	isKeyOperator,
-	removeLastDigit
-} from './utils/helpers'
+import { addKey, isKeyOperator, removeLastDigit } from './utils/helpers'
 import { themes } from './data/themes'
 
 export default function App() {
-	const [firstValue, setFirstValue] = useState<string>('')
+	const [firstValue, setFirstValue] = useState<string>('0')
 	const [secondValue, setSecondValue] = useState<string>('0')
 	const [operator, setOperator] = useState<string>('')
 	const [theme, setTheme] = useState<number>(0)
 
 	function handleKeyClick(key: string) {
 		if (key === controls.RESET) {
-			setFirstValue('')
+			setFirstValue('0')
 			setOperator('')
 			setSecondValue('0')
 		} else if (key === controls.DEL) {
@@ -36,8 +31,12 @@ export default function App() {
 			}
 		} else if (key === controls.EQUAL) {
 			if (!firstValue || !secondValue || !operator) return
+
+			const operation = operations[operator]
 			setFirstValue(
-				getResult(firstValue, secondValue, operations[operator]).toString()
+				operation(+firstValue, +secondValue).toLocaleString('en-US', {
+					maximumFractionDigits: 10
+				})
 			)
 			setOperator('')
 			setSecondValue('0')
@@ -78,7 +77,7 @@ export default function App() {
 				</div>
 			</div>
 			<div className='w-full h-[6rem] md:h-[8rem] bg-screen rounded-xl flex items-center justify-end pr-6 md:pr-8 pt-2 text-4xl md:text-[55px] text-text '>
-				{!operator ? firstValue || 0 : secondValue || 0}
+				{!operator ? firstValue : secondValue}
 			</div>
 			<div className='flex flex-wrap w-full bg-keypad p-5 md:p-8 gap-4 md:gap-6 rounded-xl'>
 				{keypad.map(key => (

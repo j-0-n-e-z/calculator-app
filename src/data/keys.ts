@@ -25,7 +25,7 @@ export const operators = {
 	MINUS: '-'
 }
 
-export const keyboard = [
+export const keypad = [
 	keys.SEVEN,
 	keys.EIGHT,
 	keys.NINE,

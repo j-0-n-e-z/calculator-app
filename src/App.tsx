@@ -4,7 +4,6 @@ import { controls, keypad, keys } from './data/keys'
 import { operations } from './data/operations'
 import { getKeyStyle } from './data/keyStyles'
 import { addKey, isKeyOperator, removeLastDigit } from './utils/helpers'
-import { themes } from './data/themes'
 import { switcherStyles } from './data/switcherStyles'
 
 export default function App() {
@@ -69,7 +68,11 @@ export default function App() {
 					</div>
 					<div
 						className='w-20 h-7 bg-keypad rounded-full flex items-center p-[5px] cursor-pointer'
-						onClick={() => setTheme(prev => prev === 'dark' ? 'light' : prev === 'light' ? 'neon' : 'dark')}
+						onClick={() =>
+							setTheme(prev =>
+								prev === 'dark' ? 'light' : prev === 'light' ? 'neon' : 'dark'
+							)
+						}
 					>
 						<div
 							className={`rounded-full w-[18px] h-[18px] bg-equal ${switcherStyles[theme]}`}

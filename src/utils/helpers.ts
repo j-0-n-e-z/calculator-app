@@ -6,7 +6,11 @@ export const isKeyOperator = (key: string) =>
 	Object.values(operators).includes(key)
 
 export const removeLastDigit = (num: string) => {
-	return num.length === 1 ? keys.ZERO : num.length > 1 ? num.slice(0, -1) : num
+	return num.length === 1 || !Number.isFinite(+num)
+		? keys.ZERO
+		: num.length > 1
+		? num.slice(0, -1)
+		: num
 }
 
 export const getResult = (

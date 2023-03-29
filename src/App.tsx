@@ -3,8 +3,15 @@ import './App.css'
 import { controls, keypad, keys } from './data/keys'
 import { operations } from './data/operations'
 import { getKeyStyle } from './data/keyStyles'
-import { addKey, isKeyOperator, removeLastDigit } from './utils/helpers'
-import { switcherStyles } from './data/switcherStyles'
+import {
+	addKey,
+	getNextTheme,
+	getOutputValue,
+	isKeyOperator,
+	parseToNumber,
+	removeLastChar
+} from './utils/helpers'
+import { switcherStyles, themes } from './data/themes'
 
 export default function App() {
 	const [firstValue, setFirstValue] = useState<string>('0')
@@ -19,9 +26,9 @@ export default function App() {
 			setSecondValue('0')
 		} else if (key === controls.DEL) {
 			if (!operator) {
-				setFirstValue(prev => removeLastDigit(prev))
+				setFirstValue(value => removeLastChar(value))
 			} else if (firstValue) {
-				setSecondValue(prev => removeLastDigit(prev))
+				setSecondValue(value => removeLastChar(value))
 			}
 		} else if (key === keys.DOT) {
 			if (!operator) {
@@ -34,9 +41,10 @@ export default function App() {
 
 			const operation = operations[operator]
 			setFirstValue(
-				operation(+firstValue, +secondValue).toLocaleString('en-US', {
-					maximumFractionDigits: 10
-				})
+				operation(
+					parseToNumber(firstValue),
+					parseToNumber(secondValue)
+				).toString()
 			)
 			setOperator('')
 			setSecondValue('0')
@@ -69,9 +77,7 @@ export default function App() {
 					<div
 						className='w-20 h-7 bg-keypad rounded-full flex items-center p-[5px] cursor-pointer'
 						onClick={() =>
-							setTheme(prev =>
-								prev === 'dark' ? 'light' : prev === 'light' ? 'neon' : 'dark'
-							)
+							setTheme(currentTheme => getNextTheme(themes, currentTheme))
 						}
 					>
 						<div
@@ -81,7 +87,7 @@ export default function App() {
 				</div>
 			</div>
 			<div className='w-full h-[6rem] md:h-[8rem] bg-screen rounded-xl flex items-center justify-end pr-6 md:pr-8 pt-2 text-4xl md:text-[55px] text-text '>
-				{!operator ? firstValue : secondValue}
+				{!operator ? getOutputValue(firstValue) : getOutputValue(secondValue)}
 			</div>
 			<div className='flex flex-wrap w-full bg-keypad p-5 md:p-8 gap-4 md:gap-6 rounded-xl'>
 				{keypad.map(key => (

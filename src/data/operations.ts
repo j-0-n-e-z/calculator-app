@@ -1,4 +1,4 @@
-import { operators } from "./keys";
+import { operators } from './keys'
 
 export const operations = {
 	[operators.PLUS]: (a: number, b: number) => a + b,

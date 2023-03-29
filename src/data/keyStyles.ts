@@ -15,5 +15,3 @@ export const getKeyStyle = (key: string) => {
 			return 'bg-key key-shadow text-3xl md:text-[35px] text-veryDark hover:bg-keyHover transition'
 	}
 }
-
-
